@@ -1,25 +1,23 @@
-# Use OpenJDK 17
+# Use OpenJDK 17 slim image
 FROM openjdk:17-jdk-slim
-
-# Install MongoDB
-RUN apt-get update && \
-    apt-get install -y mongodb && \
-    mkdir -p /data/db
 
 # Set working directory
 WORKDIR /app
 
-# Copy backend project files
+# Copy project files
 COPY . .
 
 # Make Maven wrapper executable
 RUN chmod +x ./mvnw
 
-# Build Spring Boot app
+# Build Spring Boot app (skip tests for faster build)
 RUN ./mvnw clean package -DskipTests
 
-# Expose ports for Spring Boot and MongoDB
-EXPOSE 8080 27017
+# Expose port (Render assigns $PORT automatically)
+EXPOSE 8080
 
-# Start MongoDB and Spring Boot together
-CMD ["sh", "-c", "mongod --dbpath /data/db & java -jar target/rbpt-1.0.0.jar"]
+# Run Spring Boot app
+CMD ["sh", "-c", "java -jar target/rbpt-1.0.0.jar"]
+
+
+
