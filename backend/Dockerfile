@@ -7,17 +7,16 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
-# Make Maven wrapper executable
-RUN chmod +x ./mvnw
+# Install Maven
+RUN apt-get update && apt-get install -y maven && rm -rf /var/lib/apt/lists/*
 
 # Build Spring Boot app (skip tests for faster build)
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
-# Expose port (Render assigns $PORT automatically)
+# Expose backend port
 EXPOSE 8080
 
-# Run Spring Boot app
+# Run the Spring Boot app
 CMD ["sh", "-c", "java -jar target/rbpt-1.0.0.jar"]
-
 
 
