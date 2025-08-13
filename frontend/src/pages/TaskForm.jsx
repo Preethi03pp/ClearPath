@@ -78,7 +78,7 @@ export default function TaskForm() {
           <FileUploader taskId={id} onUploaded={onUploaded} />
           <ul>
             {(t.attachments || []).map(a => (
-              <li key={a.id}><a href={import.meta.env.VITE_API_BASE ? import.meta.env.VITE_API_BASE + a.url : 'http://localhost:8080' + a.url} target="_blank">{a.originalName}</a></li>
+              <li key={a.id}><a href={import.meta.env.VITE_API_BASE ? import.meta.env.VITE_API_BASE + a.url : 'https://clearpath.onrender.com' + a.url} target="_blank">{a.originalName}</a></li>
             ))}
           </ul>
         </div>
